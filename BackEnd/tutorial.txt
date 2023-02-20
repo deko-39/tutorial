@@ -1,0 +1,42 @@
+// collection USER = user + admin
+// collection VIDEO = video của user thêm + video admin thêm
+
+// Admin thêm video 
+-> Check xem trong colection VIDEO đã có url cần thêm chưa
+    -> Nếu có rồi -> Không add
+    -> Nếu chưa có -> Add
+
+// User thêm video
+-> Check xem trong colection VIDEO đã có url cần thêm chưa
+    -> Nếu có rồi -> Thêm VIDEO _id vào mảng album của user 
+    -> Nếu chưa có -> Add video vào collection VIDEO + Thêm VIDEO _id vào mảng album của user 
+
+// Collection VIDEO 
+{
+    _id: 1
+    url: xxxx
+    thumbnail: yyyy
+    name: zzzz
+}
+// Collection USER 
+// {
+//     _id: 1
+//     name: Tam
+//     album: [1]
+// }
+
+const userSchema = Schema({
+    _id: Schema.Types.ObjectId,
+    name: String,
+    age: Number,
+    album: [{ type: Schema.Types.ObjectId, ref: 'Video' }]
+  });
+
+  const videoSchema = Schema({
+    _id: Schema.Types.ObjectId,
+    name: String,
+    url: Number,
+    thumbnail: String
+  });
+
+userModel.find({}).populate(['video'])
